@@ -25,5 +25,11 @@
     },
     "default_title": "Reddit translation remover",
     "default_popup": "popup.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "dont-translate-reddit@addon.reddit",
+      "strict_min_version": "109.0"
+    }
   }
 }
