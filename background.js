@@ -1,16 +1,23 @@
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.local.set({ enabled: true });
+});
+
 chrome.webRequest.onBeforeRequest.addListener(
-    function(details) {
-      const url = new URL(details.url);
+  async ({ url }) => {
+    const { enabled } = await new Promise(resolve =>
+      chrome.storage.local.get('enabled', resolve)
+    );
+
+    if (!enabled) return {};
+
+    const u = new URL(url);
+    if (u.searchParams.has("tl")) {
+      u.searchParams.delete("tl");
+      return { redirectUrl: u.toString() };
+    }
+    return {};
+  },
   
-      if (url.searchParams.has("tl")) {
-        url.searchParams.delete("tl");
-        return { redirectUrl: url.toString() };
-      }
-  
-      return {};
-    },
-    
-    { urls: ["*://*.reddit.com/*"], types: ["main_frame"] },
-    ["blocking"]
-  );
-  
+  { urls: ["*://*.reddit.com/*"], types: ["main_frame"] },
+  ["blocking"]
+);
