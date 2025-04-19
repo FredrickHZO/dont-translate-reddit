@@ -11,7 +11,7 @@
     "https://*.reddit.com/*"
   ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js", "translationSwitchDisabler.js"]
   },
   "icons": {
     "48": "resources/icon.png",
