@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Reddit TL Cleaner",
+  "name": "Reddit Translation Remover",
   "version": "1.0",
-  "description": "Removes '?tl=xx' from Reddit URLs.",
+  "description": "Removes '?tl=xx' from Reddit URLs and disables translation switch if present.",
   "permissions": [
     "webRequest",
     "webRequestBlocking",
