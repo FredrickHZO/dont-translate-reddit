@@ -2,22 +2,26 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({ enabled: true });
 });
 
-chrome.webRequest.onBeforeRequest.addListener(
-  async ({ url }) => {
-    const { enabled } = await new Promise(resolve =>
-      chrome.storage.local.get('enabled', resolve)
-    );
+const options = { 
+  urls: ["*://*.reddit.com/*"], 
+  types: ["main_frame"] 
+};
 
-    if (!enabled) return {};
+const action = async ({ url }) => {
+  const { enabled } = await new Promise(resolve =>
+    chrome.storage.local.get('enabled', resolve)
+  );
 
-    const u = new URL(url);
-    if (u.searchParams.has("tl")) {
-      u.searchParams.delete("tl");
-      return { redirectUrl: u.toString() };
-    }
+  if (!enabled) {
     return {};
-  },
-  
-  { urls: ["*://*.reddit.com/*"], types: ["main_frame"] },
-  ["blocking"]
-);
+  }
+
+  const u = new URL(url);
+  if (u.searchParams.has("tl")) {
+    u.searchParams.delete("tl");
+    return { redirectUrl: u.toString() };
+  }
+  return {};
+};
+
+chrome.webRequest.onBeforeRequest.addListener(action, options, ["blocking"]);
