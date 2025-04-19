@@ -6,7 +6,9 @@
   "permissions": [
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
-    "storage"
+    "webNavigation",
+    "storage",
+    "scripting"
   ],
   "host_permissions": [
     "https://*.reddit.com/*"
