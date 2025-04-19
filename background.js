@@ -2,7 +2,6 @@ let enabled = true;
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({ enabled: true });
-  enabled = true;
 });
 
 chrome.storage.onChanged.addListener((changes, area) => {
@@ -16,17 +15,17 @@ const options = {
   types: ["main_frame"]
 };
 
-chrome.webRequest.onBeforeRequest.addListener(
-  function (details) {
-    if (!enabled) return {};
-
-    const u = new URL(details.url);
-    if (u.searchParams.has("tl")) {
-      u.searchParams.delete("tl");
-      return { redirectUrl: u.toString() };
-    }
+const removeTranslation = (details) => {
+  if (!enabled) {
     return {};
-  },
-  options,
-  ["blocking"]
-);
+  } 
+  
+  const url = new URL(details.url);
+  if (url.searchParams.has("tl")) {
+    url.searchParams.delete("tl");
+    return { redirectUrl: url.toString() };
+  }
+  return {};
+}
+
+chrome.webRequest.onBeforeRequest.addListener(removeTranslation, options, ["blocking"]);
