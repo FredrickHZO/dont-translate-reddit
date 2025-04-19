@@ -25,9 +25,7 @@ const turnOffSwitch = () => {
       if (switchInput) {
             switchInput.setAttribute('aria-checked', 'false');
             switchInput.removeAttribute('checked');
-            return;
       }
-      setTimeout(turnOffSwitch, 500);
 }
 
 chrome.storage.local.get("enabled", ({ enabled }) => {
