@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Reddit TL Cleaner",
   "version": "1.0",
   "description": "Removes '?tl=xx' from Reddit URLs.",
@@ -7,9 +7,7 @@
     "webRequest",
     "webRequestBlocking",
     "tabs",
-    "storage"
-  ],
-  "host_permissions": [
+    "storage",
     "https://*.reddit.com/*"
   ],
   "background": {
@@ -19,17 +17,11 @@
     "48": "resources/icon.png",
     "96": "resources/icon.png"
   },
-  "action": {
+  "browser_action": {
     "default_icon": {
       "48": "resources/icon.png"
     },
     "default_title": "Reddit translation remover",
     "default_popup": "popup.html"
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "dont-translate-reddit@addon.reddit",
-      "strict_min_version": "109.0"
-    }
   }
 }
