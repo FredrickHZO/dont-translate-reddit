@@ -1,5 +1,5 @@
-const searchInShadowRoot = (selector, root = document) => {
-      const queue = [root];
+const searchInShadowRoot = (selector) => {
+      const queue = [document];
 
       while (queue.length) {
             const current = queue.shift();
@@ -9,11 +9,11 @@ const searchInShadowRoot = (selector, root = document) => {
             }
 
             const children = current.querySelectorAll('*');
-            for (const child of children) {
+            children.forEach(child => {
                   if (child.shadowRoot) {
-                        queue.push(child.shadowRoot);
+                        queue.push(child.shadowRoot)
                   }
-            }
+            });
       }
 
       return null;
@@ -29,7 +29,9 @@ const turnOffSwitch = () => {
 }
 
 chrome.storage.local.get("enabled", ({ enabled }) => {
-      if (!enabled) return;
+      if (!enabled) {
+            return;
+      }
       turnOffSwitch();
 });
     
